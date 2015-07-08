@@ -1,0 +1,458 @@
+@media only screen and (max-width: 760px) {
+    .metro .atitle {
+        font-size: 17vw;
+        letter-spacing: -8px;
+    }
+    core-toolbar {
+        height: 56px;
+        transition: height 1s;
+        -webkit-transition: height 1s;
+    }
+    .metro .page:nth-child(3) {
+        top: 56px;
+        height: calc(100% - 15px);
+    }
+    .vertical-menu {
+        width: 90vw;
+        left: -90vw;
+    }
+    .vertical-menu.close {
+        left: -90vw;
+    }
+    .vertical-menu.open {
+        left: 0;
+    }
+    .metro .vertical-menu ul li a {
+        font-size: 0.5cm;
+        line-height: 0.6cm;
+    }
+    .metro h1, .metro .vertical-menu li.title.fg-white {
+        font-size: 1cm;
+        line-height: 1.5cm;
+    }
+    .metro .icon-cancel-2.large.right {
+        font-size: 1cm;
+    }
+    .metro .input-control.text {
+        width: 70vw;
+    }
+    .user-div {
+        width: 90vw;
+    }
+    .posts .post {
+        margin: 0;
+        margin-top: 20px;
+    }
+}
+@media only screen and (min-width: 500px) {
+    .posts .post {
+        width: 500px;
+    }
+}
+@media only screen and (min-width: 540px) {
+    .posts .post {
+        margin: 20px;
+    }
+}
+@media only screen and (max-width: 427px) {
+    .halp {
+        display: inline;
+        text-align: center;
+    }
+    .halp a.button {
+        float: none;
+    }
+}
+@media only screen and (min-width: 428px) {
+    .trouble {
+        float: right;
+    }
+}
+@media only screen and (min-width: 761px) {
+    .atitle {
+        font-size: 3cm !important;
+        letter-spacing: -3mm !important;
+    }
+    core-toolbar {
+        height: 64px;
+        transition: height 1s;
+        -webkit-transition: height 1s;
+    }
+    .metro .page.open {
+        width: calc(100% - 300px);
+        left: 300px;
+    }
+    .metro .page.close {
+        width: 100%;
+        left: 0px;
+    }
+    .metro .page:nth-child(3) {
+        top: 64px;
+        height: calc(100% - 64px);
+    }
+    .user-id-image, .user-id-image img {
+        border-radius: 40px;
+        transition: height 1s, width 1s;
+        -webkit-transition: height 1s, width 1s;
+    }
+    .user-id-image [class*="icon-"] {
+        transition: font-size 1s;
+        -webkit-transition: font-size 1s;
+    }
+    .vertical-menu {
+        width: 300px;
+        left: -300px;
+    }
+    .vertical-menu.close {
+        left: -300px;
+    }
+    .vertical-menu.open {
+        left: 0;
+    }
+    .metro .input-control.text {
+        width: 720px;
+    }
+    .user-div {
+        width: 300px;
+    }
+}
+@media only print {
+    .metro core-toolbar {
+        display: none;
+    }
+}
+::-webkit-input-placeholder { /* WebKit browsers */
+    color: black;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+   color: black;
+   opacity: 1;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+   color: black;
+   opacity:  1;
+}
+:-ms-input-placeholder { /* Internet Explorer 10+ */
+   color: black;
+}
+body {
+    background-color: #c5cae9;
+}
+/*POPUP EXPERIMENT*/
+#blanket {
+background-color:#111;
+opacity: 0.65;
+*background:none;
+position:absolute;
+z-index: 9001;
+top:0px;
+left:0px;
+width:100%;
+}
+
+#popUpDiv {
+position:absolute;
+background:url(pop-back.jpg) no-repeat;
+width:400px;
+height:400px;
+border:5px solid #000;
+z-index: 9002;
+}
+/*POPUP EXPERIMENT END*/
+
+.user-id-image, .user-id-image img {
+    background-color: #303f9f !important;
+    box-shadow: 0px 2px 5px rgba(0,0,0,0.26);
+}
+.user-id-image:hover {
+    background-color: #1a237e !important;
+}
+.user-id-image span {
+    width: 100%;
+    height: 100%;
+    line-height: 40px;
+    vertical-align: middle;
+}
+.atitle {
+    font-family: 'Montserrat' !important;
+    font-weight: 400 !important;
+    margin: auto !important;
+    line-height: normal !important;
+    color: lightgrey !important;
+}
+.centre {
+    text-align: center;
+    vertical-align: middle;
+    display: inline;
+    position: absolute;
+    top: 40%;
+    top: calc(50% - 2.95cm);
+    height: calc(50% - 2.95cm);
+    width: 100%;
+    z-index: 20;
+    left: 0;
+}
+.bottom {
+    text-align: center;
+    vertical-align: bottom;
+    display: inline;
+    width: 100%;
+}
+.bottompanel {
+    border: none;
+    border-left: 1px solid white;
+    border-right: 1px solid white;
+}
+.bottom .bottompanel:first-child {
+    border: none;
+    border-left: none;
+    border-right: 1px solid white;
+}
+.bottom .bottompanel:last-child {
+    border: none;
+    border-left: 1px solid white;
+    border-right: none;
+}
+.metro .input-control.text {
+    position: relative;
+    left: 0.5cm;
+}
+.metro .input-control.text input {
+    border: none;
+    border-bottom: 0.5mm solid #d1d1d1;
+    background-color: #c5cae9 !important;
+    color: black;
+}
+.btn-blank {
+    position: absolute;
+    top: 5px;
+    z-index: 2;
+    border: 0;
+    right: 28px;
+    width: 24px;
+    height: 24px;
+    min-height: 1px;
+    min-width: 1px;
+    padding: 0;
+    margin: 0;
+    font-family: iconFont !important;
+    font-size: 10pt;
+}
+body.metro .page {
+    background-color: #c5cae9 !important;
+    transition: all 1s;
+    -webkit-transition: all 1s;
+    width: 100%;
+    left: 0px;
+    position: relative;
+    padding: 5px;
+}
+core-toolbar {
+    background-color: #3f51b5;
+    box-shadow: 0px 2px 5px rgba(0,0,0,0.26);
+}
+.vertical-menu {
+    background-color: #303f9f !important;
+    z-index: 2;
+    transition: left 1s;
+    -webkit-transition: left 1s;
+    height: 100%;
+    position: fixed;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+.vertical-menu.open {
+    box-shadow: 2px 0px 5px rgba(0,0,0,0.26);
+}
+paper-menu section {
+    border-top: 1px solid #e5e5e5;
+}
+.alternate {
+    background-color: #303f9f;
+}
+.metro .page div, .metro .page span, .metro span, .metro p, .metro .page p, .metro paper-toolbar li, .user-div {
+    font-family: "Roboto", "Segoe UI Light", "Open Sans", "Helvetica Neue", Arial, sans-serif !important;
+    letter-spacing: normal;
+}
+.metro [class*="icon-"], .metro p[class*="icon-"], .metro i[class*="icon-"], .metro .page [class*="icon-"], .metro .page p[class*="icon-"], .metro .page i[class*="icon-"] {
+    font-family: "iconFont" !important;
+}
+.metro .vertical-menu li.title {
+    font-family: 'Segoe UI Light_', 'Open Sans Light', Verdana, Arial, Helvetica, sans-serif !important;
+}
+.user-div {
+    background-color: #3f51b5;
+    position: absolute;
+    bottom: 0px;
+}
+.user-div img {
+    border-radius: 50px;
+}
+.middle img {
+    border-radius: 50px;
+}
+.user-div [class*="icon-"].fg-white {
+    border-radius: 50px;
+    font-size: 30px;
+    background-color: #303f9f;
+    height: 50px;
+    width: 50px;
+    float: right;
+    padding: 10px;
+    margin-right: 10px;
+}
+post-box, .postbox {
+    margin: auto;
+    margin-top: 20px;
+    max-width: 500px;
+    height: 300px;
+    background-color: #3f51b5;
+    box-shadow: 2px 0px 5px rgba(0,0,0,0.26);
+    display: block;
+}
+.postbox textarea {
+    width: 100%;
+    height: 240px;
+    padding: 10px;
+    background-color: #9fa8da;
+    font-family: "Roboto", "Open Sans", "Segoe UI Light", sans-serif;
+    border: none;
+    resize: none;
+    color: black;
+}
+.postbox input {
+    width: 100%;
+    padding: 10px;
+    background-color: #9fa8da;
+    font-family: "Roboto", "Open Sans", "Segoe UI Light", sans-serif;
+    border: none;
+    resize: none;
+    color: black;
+}
+.post a.button, .postbox .share, .postbox .group {
+    margin: 10px;
+    padding: 10px;
+    border: none;
+    background-color: #5c6bc0;
+    color: white;
+    box-shadow: 2px 0px 5px rgba(0,0,0,0.26);
+    font-family: "Roboto", "Open Sans", "Segoe UI Light", sans-serif;
+}
+core-toolbar .filter {
+    transition: right 1s;
+    -webkit-transition: right 1s;
+    position: fixed;
+    right: -500px;
+    z-index: -1;
+}
+core-toolbar .filter.open {
+    right: 0px;
+}
+core-toolbar, .metro core-toolbar a {
+    color: #f1f1f1;
+    fill: #f1f1f1;
+}
+.posts {
+    text-align: center;
+}
+.metro .posts .post {
+    max-width: 500px;
+    padding: 10px;
+    display: inline-block;
+    background-color: #9fa8da;
+    text-align: left;
+    font-size: 12pt;
+    box-shadow: 2px 0px 5px rgba(0,0,0,0.26);
+}
+.posts .post a {
+    float: right;
+}
+.edit, .delete {
+    margin-right: 5px;
+}
+.post i {
+    float: right;
+}
+.metro .button.save, .metro p.save {
+    margin-right: 5px;
+    display: none;
+}
+.post .header {
+    font-family: "Roboto", "Open Sans", "Segoe UI Light", "Helvetica Neue", Arial, sans-serif;
+    font-weight: 100;
+}
+.post .receivers {
+    font-family: "Roboto", "Open Sans", "Segoe UI Light", "Helvetica Neue", Arial, sans-serif;
+    font-weight: 300;
+}
+.post .datetime {
+    font-family: "Roboto", "Open Sans", "Segoe UI Light", "Helvetica Neue", Arial, sans-serif;
+    font-weight: 300;
+}
+.post .comment {
+    background-color: #5c6bc0;
+    margin: 30px -10px -10px -10px;
+    padding: 5px 5px 30px 5px;
+}
+.postbox.postcomment {
+    display: none;
+    box-shadow: none;
+    margin: 0 -10px -10px -10px
+}
+#loader-wrapper .loader-section {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: #1a237e;
+    z-index: 1000;
+    -webkit-transition: opacity 1s;
+    transition: opacity 1s;
+}
+ 
+#loader-wrapper .loader-section.section-left {
+    left: 0;
+}
+ 
+#loader-wrapper .loader-section.section-right {
+    right: 0;
+}
+#loader {
+    display: block;
+    position: relative;
+    left: 50%;
+    top: 50%;
+    margin: 28px 0 0 -14px;
+    z-index: 1001;
+}
+#loader-wrapper svg {
+    display: block;
+    position: relative;
+    left: 50%;
+    top: 50%;
+    width: 192px;
+    height: 192px;
+    margin: -98px 0 0 -98px;
+    z-index: 1001;
+}
+#loader-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    -webkit-transition: all 0.2s;
+    transition: all 0.2s;
+}
+body:not([unresolved]) #loader-wrapper {
+    z-index: 0;
+    opacity: 0;
+}
+/* Loaded */
+body[unresolved] #loader-wrapper .loader-section, body[unresolved] #loader-wrapper {
+    opacity: 1;
+    z-index: 1000;
+}
+body[unresolved].metro {
+    opacity: 1;
+}
