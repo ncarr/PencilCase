@@ -15,7 +15,7 @@
             file_put_contents(($_POST["r"] == "all") ? "rootposts.txt" : "groups/" . $_POST["r"] . "/posts.txt", json_encode($posts));
             if ($_POST["r"] == "all") {
                 $db = include("sqlconnect.php");
-                $content = $db->escape_string($post["content"]);
+                $content = $post["content"];
                 $id = $_POST["id"];
                 $vals = array('si', &$content, &$id);
                 $db->prep("UPDATE rootposts SET content=? WHERE id=?", $vals);
@@ -26,7 +26,7 @@
             file_put_contents(($_POST["r"] == "all") ? "rootposts.txt" : "groups/" . $_POST["r"] . "/posts.txt", json_encode($posts));
             if ($_POST["r"] == "all") {
                 $db = include("sqlconnect.php");
-                $content = $db->escape_string($post["content"]);
+                $content = $post["content"];
                 $id = $_POST["c"];
                 $postno = $_POST["p"];
                 $vals = array('sii', &$content, &$id, &$postno);

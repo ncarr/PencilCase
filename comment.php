@@ -11,9 +11,9 @@
             file_put_contents(($_POST["g"] == "all") ? "rootposts.txt" : "groups/" . $_POST["g"] . "/posts.txt", json_encode($posts));
             if ($_POST["g"] == "all") {
                 $db = include("sqlconnect.php");
-                $content = $db->escape_string(strip_tags(preg_replace("/\r\n|\r|\n/", '<br>', $_POST["post"])));
+                $content = strip_tags(preg_replace("/\r\n|\r|\n/", '<br>', $_POST["post"]));
                 $poster_id = $_SESSION["uid"];
-                $poster_name = $db->escape_string($_SESSION["name"]);
+                $poster_name = $_SESSION["name"];
                 $postno = $_POST["p"];
                 $vals = array('isssi', &$id, &$content, &$poster_id, &$poster_name, &$postno);
                 $db->prep("INSERT INTO rootcomments (id, content, timestamp, poster_id, poster_name, post) VALUES (?, ?, now(), ?, ?, ?)", $vals);
