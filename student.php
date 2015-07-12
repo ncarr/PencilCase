@@ -25,24 +25,25 @@
     }
     if ($_GET["group"])
         $posts = json_decode(file_get_contents(($_GET["group"]) ? "groups/" . $_GET["group"] . "/posts.txt" : "rootposts.txt"), true);
-        else {
-            // Not included in GitHub. Replace with your database connection
-            $db = include("sqlconnect.php");
-            $result = $db->query("SELECT id, content, timestamp, poster_id, poster_name, receivers, priority, teacher FROM rootposts");
-            if ($result->num_rows > 0) {
-                while ($post = $result->fetch_assoc()) {
-                    $post["timestamp"] = strtotime($post["timestamp"]);
-                    $posts[$post["id"]] = $post;
-                }
-            }
-            $cresult = $db->query("SELECT id, content, timestamp, poster_id, poster_name, post FROM rootcomments");
-            if ($cresult->num_rows > 0) {
-                while ($comment = $cresult->fetch_assoc()) {
-                    $comment["timestamp"] = strtotime($comment["timestamp"]);
-                    $posts[$comment["post"]]["comments"][$comment["id"]] = $comment;
-                }
+    else {
+        $posts = array();
+        // Not included in GitHub. Replace with your database connection
+        $db = include("sqlconnect.php");
+        $result = $db->query("SELECT id, content, timestamp, poster_id, poster_name, receivers, priority, teacher FROM rootposts");
+        if ($result->num_rows > 0) {
+            while ($post = $result->fetch_assoc()) {
+                $post["timestamp"] = strtotime($post["timestamp"]);
+                $posts[$post["id"]] = $post;
             }
         }
+        $cresult = $db->query("SELECT id, content, timestamp, poster_id, poster_name, post FROM rootcomments");
+        if ($cresult->num_rows > 0) {
+            while ($comment = $cresult->fetch_assoc()) {
+                $comment["timestamp"] = strtotime($comment["timestamp"]);
+                $posts[$comment["post"]]["comments"][$comment["id"]] = $comment;
+            }
+        }
+    }
     $hw = ($_GET["group"]) ? json_decode(file_get_contents("groups/" . $_GET["group"] . "/homework.txt"), true) : array();
     if (!$_GET["group"] && $groups) {
         foreach ($groups as $group) {
@@ -68,6 +69,25 @@
 <html lang="en">
     <head>
         <title>PencilCase</title>
+        <!-- Here's where I include all my JS and CSS -->
+        <?php include_once("header.php"); ?>
+        <script>
+            var refcheck,
+            found;
+            $(document).ready(function () {
+                refcheck = setInterval("check(<?php if ($_GET["group"]) echo '"' . $_GET["group"] . '"'; ?>)", 60000);
+            });
+            $([window, document]).blur(function () {
+                if (!found) {
+                    clearInterval(refcheck);
+                }
+            }).focus(function () {
+                if (!found) {
+                    check(<?php if ($_GET["group"]) echo '"' . $_GET["group"] . '"'; ?>);
+                    refcheck = setInterval("check(<?php if ($_GET["group"]) echo '"' . $_GET["group"] . '"'; ?>)", 60000);
+                }
+            });
+        </script>
         <script>
             function sendin() {
                 $('.vertical-menu').addClass("open");
@@ -136,6 +156,16 @@
                     $("#" + id).append(data);
                 })
             }
+            function check(g) {
+                $.post("refresh.php", { g: g })
+                .done(function (data) {
+                    if (data) {
+                        $(".refresh").fadeIn();
+                        clearInterval(refcheck);
+                        found = true;
+                    }
+                })
+            }
         </script>
         <script src="bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
         <link rel="import" href="bower_components/paper-spinner/paper-spinner.html">
@@ -147,9 +177,8 @@
         <link rel="import" href="bower_components/paper-header-panel/paper-header-panel.html">
         <link rel="import" href="bower_components/paper-menu/paper-menu.html">
         <link rel="import" href="bower_components/paper-item/paper-item.html">
+        <link rel="import" href="bower_components/paper-fab/paper-fab.html">
         <link rel="import" href="postbox.php">
-        <!-- Here's where I include all my JS and CSS -->
-        <?php include_once("header.php"); ?>
         <meta name="apple-mobile-web-app-status-bar-style" content="black">
         <link rel="apple-touch-startup-image" href="logo192.png">
         <link rel="manifest" href="manifest.json">
@@ -193,6 +222,17 @@
             }
             .metro .posts .post.important {
                 background-color: #ef9a9a;
+            }
+            #refresh {
+                position: fixed;
+                bottom: 30px;
+                right: 30px;
+            }
+            #rbwrapper {
+                text-align: center;
+            }
+            .refresh {
+                display: none;
             }
         </style>
     </head>
@@ -252,6 +292,11 @@
                 </paper-toolbar>
                     <!-- Renders big page full of chat messages -->
                     <div class="page">
+                        <div class="refresh" id="rbwrapper">
+                            <div class="refreshbar">
+                                <p class="content">There are new posts. Press the button in the bottom-right to load them.</p>
+                            </div>
+                        </div>
                         <post-box query="<?php echo $_SERVER["QUERY_STRING"]; ?>" group="<?php echo $_GET["group"]; ?>"></post-box>
                         <div class="posts">
                         <?php if ($_SESSION["presentation"]) { ?>
@@ -360,11 +405,7 @@
                             </div>
                 
                         </div>
-                    </div>
-                    <div id="blanket" style="display:none"></div>
-                    <div id="popUpDiv" style="display:none">
-                        <p>Yay! It worked! This popup is just an experiment.</p>
-                        <a href="#" onclick="popup('popUpDiv')" >Click to Close CSS Pop Up</a>
+                        <a href="<?php echo $_SERVER["REQUEST_URI"]; ?>"><paper-fab icon="refresh" class="refresh" id="refresh"></paper-fab></a>
                     </div>
             </paper-header-panel>
         </paper-drawer-panel>

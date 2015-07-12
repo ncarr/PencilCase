@@ -39,18 +39,18 @@
     .user-div {
         width: 90vw;
     }
-    .posts .post {
+    .posts .post, .refreshbar {
         margin: 0;
         margin-top: 20px;
     }
 }
 @media only screen and (min-width: 500px) {
-    .posts .post {
+    .posts .post, .refreshbar {
         width: 500px;
     }
 }
 @media only screen and (min-width: 540px) {
-    .posts .post {
+    .posts .post, .refreshbar {
         margin: 20px;
     }
 }
@@ -355,7 +355,7 @@ core-toolbar, .metro core-toolbar a {
 .posts {
     text-align: center;
 }
-.metro .posts .post {
+.metro .posts .post, .metro .refreshbar {
     max-width: 500px;
     padding: 10px;
     display: inline-block;
