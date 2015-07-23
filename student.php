@@ -75,7 +75,7 @@
             var refcheck,
             found;
             $(document).ready(function () {
-                refcheck = setInterval("check(<?php if ($_GET["group"]) echo '"' . $_GET["group"] . '"'; ?>)", 60000);
+                refcheck = setInterval("check(<?php if ($_GET["group"]) echo "'" . $_GET["group"] . "'"; ?>)", 60000);
             });
             $([window, document]).blur(function () {
                 if (!found) {
@@ -83,8 +83,8 @@
                 }
             }).focus(function () {
                 if (!found) {
-                    check(<?php if ($_GET["group"]) echo '"' . $_GET["group"] . '"'; ?>);
-                    refcheck = setInterval("check(<?php if ($_GET["group"]) echo '"' . $_GET["group"] . '"'; ?>)", 60000);
+                    check(<?php if ($_GET["group"]) echo "'" . $_GET["group"] . "'"; ?>);
+                    refcheck = setInterval("check(<?php if ($_GET["group"]) echo "'" . $_GET["group"] . "'"; ?>)", 60000);
                 }
             });
         </script>
@@ -274,16 +274,14 @@
                         <section>
                             <a class="fg-black" href="feedback.php"><paper-item><i class="icon-lamp-2 fg-black on-left"></i>Feedback Centre</paper-item></a>
                         </section>
-                        <?php if ($_SESSION["uid"] == 107079368442804920970 || $_SESSION["uid"] == 106839686885505110020 || $_SESSION["uid"] == 104898751143469146088): ?>
+                        <?php if ($_SESSION["uid"] == "INSERT ENGINEER USER ID HERE"): ?>
                         <section>
                             <!-- Only shows if you are a dev -->
                             <a class="fg-black" href="cloud.php" target="_blank"><paper-item><i class="icon-code fg-black on-left"></i>Engineer Centre</paper-item></a>
-                                <paper-item><img src="http://i.imgur.com/Wwc5u.gif" alt="Made with a Mac."></paper-item>
-                                <paper-item><a href="http://windows.microsoft.com/en-us/internet-explorer/download-ie"><img src="http://www.microsoft.com/LIBRARY/IMAGES/GIFS/GENERAL/IE_ANIMATED.GIF" alt="IE"></a></paper-item>
+                                <paper-item>Insert inside jokes here.</paper-item>
                         </section>
                         <?php endif; ?>
                 </paper-menu>
-                    <!--It's Javert for the sidebar! <paper-item><img alt = "Javert your eyes kids!" src = "http://i.imgur.com/UiXAker.gif"></paper-item>-->
             </paper-header-panel>
             <paper-header-panel mode="waterfall" main>
                 <paper-toolbar>

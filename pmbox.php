@@ -6,6 +6,19 @@
     $userdata = json_decode(file_get_contents("users/" . $_SESSION["uid"] . ".txt"), true);
     // Decode user data array to find groups
     $groups = $userdata["groups"];
+    if ($groups) {
+        foreach ($groups as $group) {
+            $g = json_decode(file_get_contents("groups/" . $group["id"] . "/index.txt"), true);
+            $members = $g["members"];
+            if ($members) {
+                foreach ($members as $member) {
+                    if ($member["owner"] && $member["id"] != $_SESSION["uid"])
+                        $owners[] = $member;
+                }
+            }
+        }
+        unset($group);
+    }
 ?>
 <link rel="import" href="bower_components/polymer/polymer.html" />
 <dom-module id="post-box">
@@ -36,11 +49,11 @@
         }
     </style>
     <template>
-        <form method="post" action="post.php?r=student.php">
-            <textarea name="post" placeholder="Enter your text here" maxlength="599" required></textarea>
+        <form method="post" action="sendpm.php">
+            <textarea name="post" placeholder="Enter your text here" maxlength="140" required></textarea>
             <input type="hidden" value="1" name="r" />
-            <button class="share" type="submit">Post to...</button>
-            <select name="group" class="group" required><?php if ($groups) { ?><option value="" selected disabled>Select a group...</option><option value="all">All groups</option><?php if ($_SESSION["uid"] == "INSERT ENGINEER ID HERE") { ?><option value="engineers">Every user</option><?php } foreach ($groups as $group): ?><option value="<?php echo $group["id"]; ?>" selected?="{{group == '<?php echo $group["id"]; ?>'}}"><?php echo $group["name"]; ?></option><?php endforeach; } else { ?><option value="Null" selected disabled>You have no groups</option><?php } ?></select>
+            <button class="share" type="submit">Send to...</button>
+            <select name="w" class="group" required><?php if ($owners) { ?><option value="" selected disabled>Select someone...</option><?php foreach ($owners as $owner): ?><option value="<?php echo $owner["id"]; ?>"<?php if ($owner["id"] == $_GET["w"]) echo " selected"; ?>><?php echo $owner["name"]; ?></option><?php endforeach; } else { ?><option value="Null" selected disabled>You have no groups</option><?php } ?></select>
         </form>
     </template>
 </dom-module>
