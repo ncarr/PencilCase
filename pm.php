@@ -126,6 +126,7 @@
         }
         unset($group);
     }
+    $_SESSION["lastref"] = time();
 ?>
 
 <!DOCTYPE html>

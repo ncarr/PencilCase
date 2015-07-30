@@ -63,6 +63,7 @@
             usort($assignments, "cmp2");
         }
     }
+    $_SESSION["lastref"] = time();
 ?>
 
 <!DOCTYPE html>
