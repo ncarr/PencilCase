@@ -182,7 +182,7 @@
             function check() {
                 $.post("refresh.php", { p: "pms" })
                 .done(function (data) {
-                    if (data) {
+                    if (data == "1") {
                         $(".refresh").fadeIn();
                         clearInterval(refcheck);
                         found = true;

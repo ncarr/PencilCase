@@ -9,11 +9,11 @@
             if ($last["timestamp"] >= $_SESSION["lastref"])
                 echo 1;
         }
-    } elseif ($_POST["p"] = "pms") {
+    } elseif ($_POST["p"] == "pms" || $_GET["p"] == "pms") {
         $db = include("sqlconnect.php");
         $mysqli = $db->manual();
-        $stmt = $mysqli->prepare("SELECT timestamp FROM pms WHERE receiver = ? AND timestamp >= ?");
-        $stmt->bind_param('si', $me, $lastr);
+        $stmt = $mysqli->prepare("SELECT timestamp FROM pmu WHERE receiver = ? AND timestamp >= ?");
+        $stmt->bind_param('ss', $me, $lastr);
         $me = $_SESSION["uid"];
         $lastr = date("Y-m-d H:i:s", $_SESSION["lastref"]);
         $stmt->execute();
