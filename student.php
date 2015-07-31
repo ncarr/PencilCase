@@ -275,10 +275,10 @@
                         <section>
                             <a class="fg-black" href="feedback.php"><paper-item><i class="icon-lamp-2 fg-black on-left"></i>Feedback Centre</paper-item></a>
                         </section>
-                        <?php if ($_SESSION["uid"] == "INSERT ENGINEER USER ID HERE"): ?>
                         <section>
                             <!-- Only shows if you are a dev -->
-                            <a class="fg-black" href="pm.php" target="_blank"><paper-item><i class="icon-mail fg-black on-left"></i>PM Test</paper-item></a>
+                            <a class="fg-black" href="pm.php" target="_blank"><paper-item><i class="icon-mail fg-black on-left"></i>Private Messages</paper-item></a>
+                        <?php if ($_SESSION["uid"] == "INSERT ENGINEER USER ID HERE"): ?>
                                 <paper-item>Insert inside jokes here.</paper-item>
                         </section>
                         <?php endif; ?>
