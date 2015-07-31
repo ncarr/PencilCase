@@ -25,7 +25,7 @@
         $vals = array('i', &$id);
         $db->prep("DELETE FROM pms WHERE id = ?", $vals);
         $vals2 = array('s', &$receiver);
-        $db->prep("INSERT INTO pmu (receiver, timestamp) VALUES (?, now())", $vals2);
+        $db->prep("INSERT INTO pmu (receiver, timestamp) VALUES (?, now()) ON DUPLICATE KEY UPDATE timestamp = VALUES(timestamp)", $vals2);
         header("Location: " . $_GET["return"]);
     }
 ?>

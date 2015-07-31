@@ -13,7 +13,7 @@
         $db->prep("INSERT INTO pms (id, content, timestamp, sender, receiver) VALUES (?, ?, now(), ?, ?)", $vals);
         $receiver = $_POST["w"];
         $vals2 = array('s', &$receiver);
-        $db->prep("INSERT INTO pmu (receiver, timestamp) VALUES (?, now())", $vals2);
+        $db->prep("INSERT INTO pmu (receiver, timestamp) VALUES (?, now()) ON DUPLICATE KEY UPDATE timestamp = VALUES(timestamp)", $vals2);
     }
     if ($_POST["r"])
         header("Location: pm.php");
