@@ -26,6 +26,6 @@
         $vals = array('si', &$content, &$id);
         $db->prep("UPDATE pms SET content=? WHERE id=?", $vals);
         $vals2 = array('s', &$receiver);
-        $db->prep("INSERT INTO pmu (receiver, timestamp) VALUES (?, now())", $vals2);
+        $db->prep("INSERT INTO pmu (receiver, timestamp) VALUES (?, now()) ON DUPLICATE KEY UPDATE timestamp = VALUES(timestamp)", $vals2);
     }
 ?>
