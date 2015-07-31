@@ -9,7 +9,7 @@
             if ($last["timestamp"] >= $_SESSION["lastref"])
                 echo 1;
         }
-    } elseif ($_POST["p"] == "pms" || $_GET["p"] == "pms") {
+    } elseif ($_POST["p"] == "pms") {
         $db = include("sqlconnect.php");
         $mysqli = $db->manual();
         $stmt = $mysqli->prepare("SELECT timestamp FROM pmu WHERE receiver = ? AND timestamp >= ?");
