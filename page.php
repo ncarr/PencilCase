@@ -164,15 +164,15 @@
         <!-- Account stuff -->
         <paper-drawer-panel force-narrow>
             <paper-header-panel mode="scroll" drawer>
-                <paper-toolbar class="tall" style="background-image: linear-gradient(
-      rgba(0, 0, 0, 0.3),
-      rgba(0, 0, 0, 0.3)
-    ),url('<?=$_SESSION["cover"]; ?>');background-size: cover">
+                <paper-toolbar class="tall" style="background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('<?php echo $_SESSION["cover"]; ?>'); background-size: cover">
                     <div title>PencilCase</div>
-                    <div class="middle">
+                    <div class="top">
                         <img src="<?php echo $_SESSION["photo"]; ?>" />
                     </div>
-                    <div class="user-div bottom fg-white bg-transparent" style="left: 0px"> <?php echo $_SESSION["name"]; ?><a href="logout.php"><i class="icon-exit fg-white on-left"></i></a><a href="settings.php"><i class="icon-cog fg-white"></i></a></div>
+                    <div class="bottom" style="text-align: left;">
+                        <p class="fg-white"><?php echo $_SESSION["name"]; ?></p>
+                        <p style="color: rgba(255, 255, 255, 0.8)"><?php echo $_SESSION["email"]; ?></p>
+                    </div>
                 </paper-toolbar>
                     <paper-menu>
                         <paper-item><a class="fg-black" href="?">All Groups</a></paper-item>
@@ -180,7 +180,7 @@
                         <paper-item><a class="fg-black" href="?group=<?php echo $group["id"]; ?>"><?php echo $group["name"]; ?></a></paper-item>
                         <?php endforeach; } ?>
                         <section>
-                            <paper-item><a class="fg-black" href="student.php<?= ($_GET["group"]) ? "?group=" . $_GET["g"] : ""; ?>"><i class="icon-comments-4 fg-black on-left"></i>Posts</a></paper-item>
+                            <paper-item><a class="fg-black" href="student.php<?php echo ($_GET["group"]) ? "?group=" . $_GET["g"] : ""; ?>"><i class="icon-comments-4 fg-black on-left"></i>Feed</a></paper-item>
                         </section>
                         <section>
                             <paper-item><a class="fg-black" href="feedback.php"><i class="icon-lamp-2 fg-black on-left"></i>Feedback Centre</a></paper-item>

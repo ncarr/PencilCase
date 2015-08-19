@@ -16,7 +16,17 @@
     $userdata = json_decode(file_get_contents("users/" . $_SESSION["uid"] . ".txt"), true);
     $parents = $userdata["parents"];
     // Decode user data array to find groups
-    $groups = $userdata["groups"];
+    $groupsdata = $userdata["groups"];
+    foreach ($groupsdata as $groupdata) {
+        if ($groupdata["verified"] || $groupdata["owner"]) {
+            $groups[$groupdata["id"]] = $groupdata;
+            if ($groupdata["what"] == "Class") {
+                $showclassstuff = TRUE;
+                if (!$groupdata["nopoints"])
+                    $showpoints = TRUE;
+            }
+        }
+    }
     function cmp($a, $b) {
         return ($a["timestamp"] - $b["timestamp"]) * -1;
     }
@@ -235,6 +245,12 @@
             .refresh {
                 display: none;
             }
+            .fg-darkgreen {
+                color: #348637;
+            }
+            .fg-commentgreen {
+                color: #43a047;
+            }
         </style>
     </head>
     <!-- Adds Metro UI CSS (metroui.org.ua) styling to whole page -->
@@ -248,36 +264,40 @@
         <!-- Account stuff -->
         <paper-drawer-panel force-narrow>
             <paper-header-panel mode="scroll" drawer>
-                <paper-toolbar class="tall" style="background-image: linear-gradient(
-      rgba(0, 0, 0, 0.3),
-      rgba(0, 0, 0, 0.3)
-    ),url('<?=$_SESSION["cover"]; ?>');background-size: cover">
+                <paper-toolbar class="tall" style="background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('<?php echo $_SESSION["cover"]; ?>'); background-size: cover">
                     <div title>PencilCase</div>
-                    <div class="middle">
+                    <div class="top">
                         <img src="<?php echo $_SESSION["photo"]; ?>" />
                     </div>
-                    <div class="user-div bottom fg-white bg-transparent" style="left: 0px"> <?php echo $_SESSION["name"]; ?><a href="logout.php"><i class="icon-exit fg-white on-left"></i></a><a href="settings.php"><i class="icon-cog fg-white"></i></a></div>
+                    <div class="bottom" style="text-align: left;">
+                        <p class="fg-white"><?php echo $_SESSION["name"]; ?></p>
+                        <p style="color: rgba(255, 255, 255, 0.8)"><?php echo $_SESSION["email"]; ?></p>
+                    </div>
                 </paper-toolbar>
-                    <paper-menu>
-                        <a class="fg-black" href="?"><paper-item>All Groups</paper-item></a>
-                        <?php if ($groups) { foreach ($groups as $group): ?>
-                        <a class="fg-black" href="?group=<?php echo $group["id"]; ?>"><paper-item><?php echo $group["name"]; ?></paper-item></a>
-                        <?php endforeach; } ?>
-                        <a class="fg-black" href="addremgroup.php"><paper-item><i class="icon-plus-2 on-left"></i>Add/Remove</paper-item></a>
-                        <section>
-                            <a class="fg-black" href="?view=teacher"><paper-item><i class="icon-filter on-left"></i>Teacher Posts</paper-item></a>
-                        </section>
-                        <section>
-                            <a class="fg-black" href="page.php?p=homework<?= ($_GET["group"]) ? "&g=" . $_GET["group"] : ""; ?>"><paper-item><i class="icon-book fg-black on-left"></i>Homework</paper-item></a>
-                            <?php if ($_SESSION["stp"] === "teacher") { ?><a class="fg-black" href="presentation.php<?= ($_GET["group"]) ? "?g=" . $_GET["group"] : ""; ?>"><paper-item><i class="icon-screen fg-black on-left"></i>Start Presentation</paper-item></a><?php } ?>
-                            <a class="fg-black" href="points.php"><paper-item><i class="icon-bars fg-black on-left"></i>Points</paper-item></a>
-                        </section>
-                        <section>
-                            <a class="fg-black" href="feedback.php"><paper-item><i class="icon-lamp-2 fg-black on-left"></i>Feedback Centre</paper-item></a>
-                        </section>
-                        <section>
+                <paper-menu>
+                    <?php if ($groups) { ?>
+                    <?php  foreach ($groups as $group): ?>
+                    <a class="fg-black" href="?group=<?php echo $group["id"]; ?>"><paper-item><?php echo $group["name"]; ?></paper-item></a>
+                    <?php endforeach; } ?>
+                    <a class="fg-black" href="addremgroup.php"><paper-item><i class="icon-plus-2 on-left"></i>Add<?php if ($groups) { ?>/Remove Groups<?php } else { ?> a group<?php } ?></paper-item></a>
+                    <section>
+                        <a class="fg-black" href="student.php"><paper-item>View Everything</paper-item></a>
+                        <a class="fg-black" href="?view=teacher"><paper-item><i class="icon-filter on-left"></i>Teacher Posts</paper-item></a>
+                        <a class="fg-black" href="pm.php"><paper-item><i class="icon-mail fg-black on-left"></i>Private Messages</paper-item></a> 
+                    </section>
+                    <?php if ($showclassstuff) { ?>
+                    <section>
+                        <a class="fg-black" href="page.php?p=homework<?= ($_GET["group"]) ? "&g=" . $_GET["group"] : ""; ?>"><paper-item><i class="icon-book fg-black on-left"></i>Homework</paper-item></a>
+                        <?php if ($_SESSION["stp"] === "teacher") { ?><a class="fg-black" href="presentation.php<?php echo ($_GET["group"]) ? "?g=" . $_GET["group"] : ""; ?>"><paper-item><i class="icon-screen fg-black on-left"></i>Start Presentation</paper-item></a><?php } ?>
+                        <?php if ($showpoints) { ?><a class="fg-black" href="points.php"><paper-item><i class="icon-bars fg-black on-left"></i>Points</paper-item></a><?php } ?>
+                    </section>
+                    <?php } ?>
+                    <section>
+                        <a class="fg-black" href="feedback.php"><paper-item><i class="icon-lamp-2 fg-black on-left"></i>Feedback Centre</paper-item></a>
+                        <a class="fg-black" href="settings.php"><paper-item><i class="icon-cog fg-black on-left"></i>Settings</paper-item></a>
+                        <a class="fg-black" href="logout.php"><paper-item><i class="icon-exit fg-black on-left"></i>Sign Out</paper-item></a>
+                    </section>
                             <!-- Only shows if you are a dev -->
-                            <a class="fg-black" href="pm.php" target="_blank"><paper-item><i class="icon-mail fg-black on-left"></i>Private Messages</paper-item></a>
                         <?php if ($_SESSION["uid"] == "INSERT ENGINEER USER ID HERE"): ?>
                                 <paper-item>Insert inside jokes here.</paper-item>
                         </section>
@@ -300,15 +320,15 @@
                         <div class="posts">
                         <?php if ($_SESSION["presentation"]) { ?>
                             <div class="post important">
-                                <h2 class="header">PencilCase Engineers</h2>
+                                <h2 class="header">PencilCase Engineers<iron-icon icon="verified-user" class="fg-darkgreen" title="Verified Notification"></iron-icon></h2>
                                 <p class="content">Your presentation is still running.</p>
-                                <a class="button" href="presentation.php?g=<?=$_SESSION["g"];?>&i=<?=$_SESSION["i"];?>">Resume</a>
-                                <a class="button" href="presentation.php?g=<?=$_SESSION["g"];?>&i=<?=count($_SESSION["presentation"]) - 1;?>">End</a>
+                                <a class="button" href="presentation.php?g=<?php echo $_SESSION["g"]; ?>&i=<?php echo $_SESSION["i"]; ?>">Resume</a>
+                                <a class="button" href="presentation.php?g=<?php echo $_SESSION["g"];?>&i=<?php echo count($_SESSION["presentation"]) - 1; ?>">End</a>
                             </div>
                         <?php } if (!$parents && !$userdata["dismisswelcome"] && !$_GET["groups"]): ?>
                         <!-- Box that shows if you haven't added parents -->
                             <div class="post">
-                                <h2 class="header">PencilCase Engineers</h2>
+                                <h2 class="header">PencilCase Engineers<iron-icon icon="verified-user" class="fg-darkgreen" title="Verified Notification"></iron-icon></h2>
                                 <p class="content">Welcome to PencilCase! To get started, add a <?php echo ($_SESSION["stp"] == "student") ? "parent" : "group"; ?> by going to settings.</p>
                                 <a class='delete icon-remove fg-black' href="removewelcome.php"></a>
                             </div>
@@ -356,9 +376,10 @@
                 $formattedreceivers = "Some groups";
             }
             ?>
-                            <div class="post" id="<?php echo $post["id"]; ?>">
+                            <div class="post multiple" id="<?php echo $post["id"]; ?>">
+                                <div class="main">
                                 <a onclick='save(<?php echo $post["id"]; ?>, "<?php echo (is_array($post["receivers"]) ? rawurlencode(json_encode($post["receivers"])) : $post["receivers"]); ?>");' class='save button'>Save</a><p class="save">Edit away... Don't forget to save.</p>
-                                <h2 class="header"><?php echo $post["poster_name"]; ?></h2>
+                                <h2 class="header"><?php echo $post["poster_name"]; if ($post["poster_id"] == 107079368442804920970 || $post["poster_id"] == 106839686885505110020 || $post["poster_id"] == 104898751143469146088) { ?><iron-icon icon="verified-user" class="fg-darkgreen" title="Verified Engineer"></iron-icon><?php } ?></h2>
                                 <h4 class="receivers">> <?php echo $formattedreceivers; ?></h4>
                                 <h3 class="datetime"><?php
             if ($post["timestamp"] > strtotime("-1 minute"))
@@ -377,14 +398,14 @@
                 echo date("F j Y, g:i A", $post["timestamp"]);
             ?></h3>
                                 <p class="content"><?php echo $post["content"]; ?></p>
-                                <i class="comments icon-comments-4" onclick='if (!$(this).siblings(".postcomment")[0]) {$(".postcomment:first").clone().appendTo($(this).parent()).slideDown().find("textarea").val("");$(this).siblings(".postcomment").find(".p").val("<?php echo $post["id"]; ?>");$(this).siblings(".postcomment").find(".g").val("<?php echo (is_array($post["receivers"]) ? rawurlencode(json_encode($post["receivers"])) : $post["receivers"]); ?>");$(this).siblings(".postcomment").find("#r").val("student.php" + location.search);} else {$(this).siblings(".postcomment").slideUp();}'></i>
+                                <i class="comments icon-comments-4" onclick='if (!$(this).parent().siblings(".postcomment")[0]) {$(".postcomment:first").clone().appendTo($(this).parent().parent()).slideDown().find("textarea").val("");$(this).parent().siblings(".postcomment").find(".p").val("<?php echo $post["id"]; ?>");$(this).parent().siblings(".postcomment").find(".g").val("<?php echo (is_array($post["receivers"]) ? rawurlencode(json_encode($post["receivers"])) : $post["receivers"]); ?>");$(this).parent().siblings(".postcomment").find("#r").val("student.php" + location.search);} else {$(this).parent().siblings(".postcomment").slideUp();}'></i>
                                 <?php if ($post["poster_id"] == $_SESSION["uid"]) { ?>
                                 <i class='edit icon-pencil' onclick='$(this).siblings("p.content").attr("contenteditable", "true");$(this).slideUp();$(this).siblings(".save").slideDown();'></i>
                                 <i class='delete icon-remove' onclick='del(<?php echo $post["id"]; ?>, "<?php echo (is_array($post["receivers"]) ? rawurlencode(json_encode($post["receivers"])) : $post["receivers"]); ?>");'></i><?php } ?>
-                                <?php if ($post["comments"]) { ?><div class="comment">
+                                </div><?php if ($post["comments"]) { ?><div class="comment">
                                     <?php if (count($post["comments"]) > 1) { ?><a onclick="showComments(<?php echo $post["id"]; ?>, '<?php echo (is_array($post["receivers"]) ? rawurlencode(json_encode($post["receivers"])) : $post["receivers"]); ?>')">Show all <?php echo count($post["comments"]); ?> comments</a><?php } ?>
                                     <a onclick='savec(<?php $temp = end(array_values($post["comments"])); echo $post["id"]; ?>, <?php echo $temp["id"]; ?>, "<?php echo (is_array($post["receivers"]) ? rawurlencode(json_encode($post["receivers"])) : $post["receivers"]); ?>");' class='save button'>Save</a><p class="save">Edit away... Don't forget to save.</p>
-                                    <h3><?php echo $temp["poster_name"]; ?></h3>
+                                    <h3><?php echo $temp["poster_name"]; if ($temp["poster_id"] == 107079368442804920970 || $temp["poster_id"] == 106839686885505110020 || $temp["poster_id"] == 104898751143469146088) { ?><iron-icon icon="verified-user" class="fg-commentgreen" title="Verified Engineer"></iron-icon><?php } ?></h3>
                                     <p class="content"><?php echo $temp["content"]; ?></p>
                                 <?php if ($temp["poster_id"] == $_SESSION["uid"]) { ?>
                                 <i class='edit icon-pencil' onclick='$(this).siblings("p.content").attr("contenteditable", "true");$(this).slideUp();$(this).siblings(".save").slideDown();'></i>

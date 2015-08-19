@@ -259,12 +259,14 @@
             <paper-header-panel mode="scroll" drawer>
                 <paper-toolbar class="side">
                     <div title>Chats</div>
-                    <div class="user-div bottom fg-white bg-transparent" style="left: 0px"><a href="student.php"><i class="icon-home fg-white"></i></a></div>
                 </paper-toolbar>
                 <paper-menu<?php if ($_GET["w"]) echo ' selected="' . $windex . '"'; else echo ' selected="0"'; ?>>
                     <?php if ($owners) { ?><a class="fg-black" href="pm.php"><paper-item>All</paper-item></a>
                     <?php foreach ($owners as $owner): ?><a class="fg-black" href="pm.php?w=<?php echo $owner["id"]; ?>"><paper-item><?php echo $owner["name"]; ?></paper-item></a>
                     <?php endforeach; } else { ?><paper-item>No chats</paper-item><?php } ?>
+                    <section>
+                        <a class="fg-black" href="student.php"><paper-item>Feed</paper-item></a>
+                    </section>
                 </paper-menu>
             </paper-header-panel>
             <paper-header-panel mode="waterfall" main>

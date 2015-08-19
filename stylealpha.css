@@ -33,7 +33,7 @@
     .metro .icon-cancel-2.large.right {
         font-size: 1cm;
     }
-    .metro .input-control.text {
+    .metro .input-control.text, .metro .input-control.textarea {
         width: 70vw;
     }
     .user-div {
@@ -109,7 +109,7 @@
     .vertical-menu.open {
         left: 0;
     }
-    .metro .input-control.text {
+    .metro .input-control.text, .metro .input-control.textarea {
         width: 720px;
     }
     .user-div {
@@ -213,13 +213,13 @@ z-index: 9002;
     border-left: 1px solid white;
     border-right: none;
 }
-.metro .input-control.text {
+.metro .input-control.text, .metro .input-control.textarea {
     position: relative;
     left: 0.5cm;
 }
-.metro .input-control.text input {
+.metro .input-control.text input, .metro .input-control.textarea textarea {
     border: none;
-    border-bottom: 0.5mm solid #d1d1d1;
+    border-bottom: 0.5mm solid #5c6bc0;
     background-color: #c5cae9 !important;
     color: black;
 }
@@ -288,7 +288,7 @@ paper-menu section {
 .user-div img {
     border-radius: 50px;
 }
-.middle img {
+.top img, .middle img {
     border-radius: 50px;
 }
 .user-div [class*="icon-"].fg-white {
@@ -357,12 +357,14 @@ core-toolbar, .metro core-toolbar a {
 }
 .metro .posts .post, .metro .refreshbar {
     max-width: 500px;
-    padding: 10px;
     display: inline-block;
     background-color: #9fa8da;
     text-align: left;
     font-size: 12pt;
     box-shadow: 2px 0px 5px rgba(0,0,0,0.26);
+}
+.metro .posts .post.multiple .main, .metro .posts .post:not(.multiple), .metro .refreshbar {
+    padding: 10px 10px 30px 10px;
 }
 .posts .post a {
     float: right;
@@ -391,13 +393,13 @@ core-toolbar, .metro core-toolbar a {
 }
 .post .comment {
     background-color: #5c6bc0;
-    margin: 30px -10px -10px -10px;
     padding: 5px 5px 30px 5px;
 }
 .postbox.postcomment {
     display: none;
     box-shadow: none;
-    margin: 0 -10px -10px -10px
+    border-top: 1px solid #5c6bc0;
+    margin: auto;
 }
 #loader-wrapper .loader-section {
     position: fixed;
@@ -455,4 +457,7 @@ body[unresolved] #loader-wrapper .loader-section, body[unresolved] #loader-wrapp
 }
 body[unresolved].metro {
     opacity: 1;
+}
+.toolbar-tools.paper-toolbar div[title] {
+    margin-left: 0px;
 }
