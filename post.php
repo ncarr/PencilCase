@@ -12,7 +12,7 @@
         file_put_contents(($_POST["group"] == "engineers") ? "rootposts.txt" : "groups/" . $_POST["group"] . "/posts.txt", json_encode($posts));
         if ($_POST["group"] == "engineers") {
             $db = include("sqlconnect.php");
-            $content = strip_tags(preg_replace("/\r\n|\r|\n/", '<br>', $_POST["post"]));
+            $content = strip_tags(preg_replace("/\r\n|\r|\n/", '<br>', $_POST["post"]), "<p><br><br/><a>");
             $poster_id = $_SESSION["uid"];
             $poster_name = $_SESSION["name"];
             $receivers = "all";

@@ -5,7 +5,11 @@
     }
     $userdata = json_decode(file_get_contents("users/" . $_SESSION["uid"] . ".txt"), true);
     // Decode user data array to find groups
-    $groups = $userdata["groups"];
+    $groupsdata = $userdata["groups"];
+    foreach ($groupsdata as $groupdata) {
+        if ($groupdata["verified"] || $groupdata["owner"])
+            $groups[$groupdata["id"]] = $groupdata;
+    }
 ?>
 <link rel="import" href="bower_components/polymer/polymer.html" />
 <dom-module id="post-box">
@@ -40,7 +44,7 @@
             <textarea name="post" placeholder="Enter your text here" maxlength="599" required></textarea>
             <input type="hidden" value="1" name="r" />
             <button class="share" type="submit">Post to...</button>
-            <select name="group" class="group" required><?php if ($groups) { ?><option value="" selected disabled>Select a group...</option><option value="all">All groups</option><?php if ($_SESSION["uid"] == "INSERT ENGINEER ID HERE") { ?><option value="engineers">Every user</option><?php } foreach ($groups as $group): ?><option value="<?php echo $group["id"]; ?>" selected?="{{group == '<?php echo $group["id"]; ?>'}}"><?php echo $group["name"]; ?></option><?php endforeach; } else { ?><option value="Null" selected disabled>You have no groups</option><?php } ?></select>
+            <select name="group" class="group" required><?php if ($groups) { ?><option value="" selected disabled>Select a group...</option><?php if (count($groups) > 1) { ?><option value="all">All groups</option><?php } if ($_SESSION["uid"] == 107079368442804920970 || $_SESSION["uid"] == 106839686885505110020 || $_SESSION["uid"] == 104898751143469146088) { ?><option value="engineers">Every user</option><?php } foreach ($groups as $group): ?><option value="<?php echo $group["id"]; ?>" selected?="{{group == '<?php echo $group["id"]; ?>'}}"><?php echo $group["name"]; ?></option><?php endforeach; } else { ?><option value="Null" selected disabled>You have no groups</option><?php } ?></select>
         </form>
     </template>
 </dom-module>

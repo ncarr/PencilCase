@@ -11,7 +11,7 @@
             exit();
         }
         if ($_POST["id"]) {
-            $post["content"] = strip_tags(preg_replace("/<\/p>|<p>/", '', preg_replace("/\r\n|\r|\n|<\/p><p>/", '<br>', $_POST["content"])), "<p><br><br/><a>");
+            $post["content"] = strip_tags(preg_replace("/\r\n|\r|\n|<\/p><p>/", '<br>', $_POST["content"]), "<p><br><br/><a>");
             file_put_contents(($_POST["r"] == "all") ? "rootposts.txt" : "groups/" . $_POST["r"] . "/posts.txt", json_encode($posts));
             if ($_POST["r"] == "all") {
                 $db = include("sqlconnect.php");
@@ -46,8 +46,8 @@
                 exit();
             }
             if ($_POST["id"]) {
-                $post["content"] = strip_tags(preg_replace("/<\/p>|<p>/", '', preg_replace("/\r\n|\r|\n|<\/p><p>/", '<br>', $_POST["content"])), "<p><br><br/><a>");
-                echo json_encode($posts);
+                $post["content"] = strip_tags(preg_replace("/\r\n|\r|\n|<\/p><p>|<\/div><div>/", '<br>', $_POST["content"]), "<p><br><br/><a>");
+                echo json_encode($posts) . "onjtrshi";
                 file_put_contents("groups/" . $group["id"] . "/posts.txt", json_encode($posts));
             }
             if ($_POST["p"] && $_POST["c"]) {
